@@ -9,9 +9,23 @@
 </template>
 <script>
 import AuthorsTable from "./components/AuthorsTable.vue";
+import { RepositoryFactory } from "@/Repository/RepositoryFactory";
+const ProductFactory = RepositoryFactory.get("Products");
 export default {
       name: "OrderDetail",
       components: { AuthorsTable },
+      created(){
+            this.getOrderDetailByOrderID();
+      },
+      methods:{
+            getOrderDetailByOrderID(){
+                  ProductFactory.getOrderDetailByOrderID(this.$store.state.orderCode).then((res) => {
+                        if(res.status == 200) {
+                              this.listData = res.data;
+                        }
+                  })
+            }
+      },
       data() {
             return {
                  
@@ -21,7 +35,7 @@ export default {
                         { fieldName: "price", text: "giá tiền", style: "mb-0 text-sm",type:"number" },
                   ],
                   listData: [
-                        {productCode: "SPAJW0239",productImagesUrl: "https://ik.imagekit.io/mbtxd1r6m/z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg?updatedAt=1704515446398",productName :"Áo Khoác Phao Regular 5051",productSizeName:"L",productColorName:"Xanh",quantity:10,price:300000}
+                        
                   ]
             }
       },

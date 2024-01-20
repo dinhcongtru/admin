@@ -48,8 +48,8 @@
               <i v-else>
                 <argon-avatar img="@/assets/img/logo.png" alt="Avatar" size="xl" circular />
               </i>
-              <span v-if="this.$store.state.isRTL" class="d-sm-inline d-none"
-                >يسجل دخول</span
+              <span v-if="this.$store.state.isLogin" class="d-sm-inline d-none"
+                >ADMIN</span
               >
               <span v-else class="d-sm-inline d-none">Sign In</span>
             </router-link>
@@ -214,6 +214,7 @@ export default {
   },
   props: ["minNav", "textWhite"],
   created() {
+    
     this.minNav;
   },
   methods: {

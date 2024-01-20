@@ -21,6 +21,8 @@ import ArgonInput from "@/components/ArgonInput.vue";
 import AuthorsTable from "./components/AuthorsTable.vue";
 import ArgonPagination from "@/components/ArgonPagination.vue";
 import ArgonPaginationItem from "@/components/ArgonPaginationItem.vue";
+import { RepositoryFactory } from "@/Repository/RepositoryFactory";
+const ProductFactory = RepositoryFactory.get("Products");
 export default {
   name: "orders",
   components: {
@@ -30,24 +32,30 @@ export default {
     ArgonInput
 
   },
+  created(){
+    this.getAllOrders();
+  },
+  methods:{
+    getAllOrders(){
+      ProductFactory.getAllOrders().then(res => {
+        if(res.status == 200) {
+          this.listData = res.data;
+        }
+      })
+    }
+  },
   data() {
     return {
       listHeader: [
-        { fieldName: "code", text: "Mã đơn hàng", style: "mb-0 text-sm" },
+        { fieldName: "orderCode", text: "Mã đơn hàng", style: "mb-0 text-sm" },
         { fieldName: "fullName", text: "Họ và tên", style: "mb-0 text-sm" },
         { fieldName: "email", text: "email", style: "mb-0 text-sm" },
         { fieldName: "totalPrice", text: "Tổng Tiền", style: "mb-0 text-sm", type: "number" },
-        { fieldName: "state", text: "Trạng Thái", style: "badge badge-sm bg-gradient-success" },
+        { fieldName: "status", text: "Trạng Thái", style: "badge badge-sm bg-gradient-success" },
         { fieldName: "orderDate", text: "Thời gian tạo", style: "text-secondary text-xs font-weight-bold" },
 
       ],
       listData: [
-        { code: "DHAHDA01", productImagesUrl: "https://ik.imagekit.io/mbtxd1r6m/z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg?updatedAt=1704515446398", fullName: "Đinh Thế ANH", email: "anh@gmail.com", totalPrice: 90000, state: "chờ xác nhận", orderDate: "04/9/2249" },
-        { code: "DHAHDA02", productImagesUrl: "https://ik.imagekit.io/mbtxd1r6m/z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg?updatedAt=1704515446398", fullName: "Đinh Thế ANH", email: "anh@gmail.com", totalPrice: 90000, state: "chờ xác nhận", orderDate: "04/9/2249" },
-        { code: "DHAHDA03", productImagesUrl: "https://ik.imagekit.io/mbtxd1r6m/z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg?updatedAt=1704515446398", fullName: "Đinh Thế ANH", email: "anh@gmail.com", totalPrice: 90000, state: "chờ xác nhận", orderDate: "04/9/2249" },
-        { code: "DHAHDA04", productImagesUrl: "https://ik.imagekit.io/mbtxd1r6m/z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg?updatedAt=1704515446398", fullName: "Đinh Thế ANH", email: "anh@gmail.com", totalPrice: 90000, state: "chờ xác nhận", orderDate: "04/9/2249" },
-        { code: "DHAHDA05", productImagesUrl: "https://ik.imagekit.io/mbtxd1r6m/z4782313532747_8ab7a9c193f712de4ddefd24df8262ea.jpg?updatedAt=1704515446398", fullName: "Đinh Thế ANH", email: "anh@gmail.com", totalPrice: 90000, state: "chờ xác nhận", orderDate: "04/9/2249" },
-
 
       ],
      

@@ -27,19 +27,19 @@
                     <label for="example-text-input" class="form-control-label"
                       >Tên Khách Hàng</label
                     >
-                    <argon-input type="text" placeholder="Tên Khách Hàng..." :value="customer.fullName" />
+                    <argon-input type="text" placeholder="Tên Khách Hàng..." v-model="customer.fullName" />
                   </div>
                   <div class="col-md-6">
                     <label for="example-text-input" class="form-control-label"
                       >Email Khách Hàng</label
                     >
-                    <argon-input type="email" placeholder="Email Khách Hàng..." :value="customer.email" />
+                    <argon-input type="email" placeholder="Email Khách Hàng..." v-model="customer.email" />
                   </div>
                   <div class="col-md-6">
                     <label for="example-text-input" class="form-control-label"
                       >Số Điện Thoại</label
                     >
-                    <argon-input type="text" placeholder="Số Điện Thoại..." :value="customer.phone" />
+                    <argon-input type="text" placeholder="Số Điện Thoại..." v-model="customer.phone" />
                   </div>
                 </div>
               </div>
@@ -64,13 +64,14 @@
   // import ProfileCard from "./components/ProfileCard.vue";
   import ArgonInput from "@/components/ArgonInput.vue";
   import ArgonButton from "@/components/ArgonButton.vue";
-  
+  import { RepositoryFactory } from "@/Repository/RepositoryFactory";
+  const CustomerFactory = RepositoryFactory.get("Customers");
   export default {
   name:"CustomerInfo",
   components:{ArgonInput,ArgonButton},
-  async created(){
+   created(){
     //call api load record
-  
+    this.GetByID();
   },
   data(){
     return{
@@ -79,7 +80,14 @@
     }
   },
   methods :{
-    
+    GetByID(){
+      CustomerFactory.GetByID(this.$store.state.cusCode).then(res => {
+        if(res.status == 200) {
+          this.customer = res.data;
+        
+        }
+      })
+    }
   }
   
   }

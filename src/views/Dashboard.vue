@@ -62,11 +62,9 @@
         </div>
         <div class="row mt-4">
           <div class="col-lg-7 mb-lg-0 mb-4">
-            <consumption-room-chart />
+            <consumption-room-chart :totalProduct="total" :listCate="listCate" />
           </div>
-          <div class="col-lg-5">
-            <categories-card :cardTitle="titleProBestSell" />
-          </div>
+          
         </div>
       </div>
     </div>
@@ -76,51 +74,106 @@
 import Card from "@/examples/Cards/Card.vue";
 import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
 import Carousel from "./components/Carousel.vue";
-import CategoriesCard from "./components/CategoriesCard.vue";
 import ConsumptionRoomChart  from "@/examples/Charts/ConsumptionRoomChart.vue"; 
 import US from "@/assets/img/icons/flags/US.png";
 import DE from "@/assets/img/icons/flags/DE.png";
 import GB from "@/assets/img/icons/flags/GB.png";
 import BR from "@/assets/img/icons/flags/BR.png";
-
+import { RepositoryFactory } from "@/Repository/RepositoryFactory";
+const ProductFactory = RepositoryFactory.get("Products");
+const CustomerFactory = RepositoryFactory.get("Customers");
 export default {
   name: "dashboard-default",
+  created() {
+    this.doanhthungay();
+    this.tongnhanvien();
+    this.tongkhachhang();
+    this.tongdontrongngay();
+    this.catebestseller();
+  },
+  computed:{
+    total(){
+      let temp = 0;
+      if(this.listCate.length > 0) {
+        this.listCate.forEach((item) => {
+          temp += item.product_count;
+        })
+      }
+      return temp;
+    }
+  },
+  methods:{
+    catebestseller(){
+      ProductFactory.GetProductByCateBestSell().then(res => {
+        if(res.status == 200) {
+          this.listCate =res.data;
+        }
+      })
+    },
+    doanhthungay(){
+      ProductFactory.doanhthungay().then((res) => {
+        if(res.status == 200) {
+          this.stats.money.value = res.data.toLocaleString("en-US", {
+          minimumFractionDigits: 0,
+        })
+        }
+      })
+    },
+     tongnhanvien() {
+      ProductFactory.tongnhanvien().then((res) => {
+        if (res.status == 200) {
+          this.stats.users.value = res.data;
+        }
+      })
+     },
+     tongkhachhang(){
+      CustomerFactory.tongkhachhang().then(res => {
+        if(res.status == 200) {
+          this.stats.clients.value = res.data;
+        }
+      })
+     },
+     tongdontrongngay(){
+      ProductFactory.tongdontrongngay().then((res) => {
+        if(res.status == 200) {
+          this.stats.sales.value = res.data;
+        }
+      })
+     }
+  },
   data() {
     return {
+      listCate:[],
       titleProBestSell:"Top Sản Phẩm Bán Chạy",
       stats: {
         money: {
           title: "Doanh Thu Theo Ngày",
-          value: "300,000đ",
-          percentage: "+55%",
+          value: "0đ",
           iconClass: "ni ni-money-coins",
-          detail: "So Với Ngày Hôm Qua",
           iconBackground: "bg-gradient-primary",
         },
         users: {
           title: "Tổng Nhân Viên",
-          value: "23",
-          percentage: "+3%",
+          value: "0",
           iconClass: "ni ni-world",
           iconBackground: "bg-gradient-danger",
-          detail: "So Với Tháng Qua",
+          
         },
         clients: {
           title: "Tổng Số Khách Hàng",
-          value: "+3,462",
-          percentage: "-2%",
+          value: "0",
+         
           iconClass: "ni ni-paper-diploma",
-          percentageColor: "text-danger",
           iconBackground: "bg-gradient-success",
-          detail: "So Với Quý Qua",
+
         },
         sales: {
           title: "Tổng Đơn Hàng Trong Ngày",
-          value: "10",
-          percentage: "+5%",
+          value: "0",
+        
           iconClass: "ni ni-cart",
           iconBackground: "bg-gradient-warning",
-          detail: "So Với Ngày Hôm Qua",
+         
         },
       },
       sales: {
@@ -159,7 +212,6 @@ export default {
     Card,
     GradientLineChart,
     Carousel,
-    CategoriesCard,
     ConsumptionRoomChart 
   },
 };

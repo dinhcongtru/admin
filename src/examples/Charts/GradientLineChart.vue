@@ -25,15 +25,15 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Sales overview",
+      default: "Doanh thu",
     },
     detail1: {
       type: String,
-      default: "4% more",
+      default: "",
     },
     detail2: {
       type: String,
-      default: "in 2021",
+      default: "in 2024",
     },
   },
 
@@ -48,7 +48,7 @@ export default {
     new Chart(ctx1, {
       type: "line",
       data: {
-        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        labels: ["7","14","21","28","30"],
         datasets: [
           {
             label: "Mobile apps",

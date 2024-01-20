@@ -39,7 +39,7 @@
                   </td>
                   <td class="text-sm text-center align-middle">
                     <!-- tính toán ra chỉ số danh mục đó có sản phẩm chiếm bao nhiêu % so với cả kho lấy 5 danh mục cao nhất-->
-                    <span class="text-xs font-weight-bold">{{ totalpreSion }}%</span>
+                    <!-- <span class="text-xs font-weight-bold">{{ totalpreSion }}%</span> -->
                   </td>
                 </tr>
               </tbody>
@@ -69,10 +69,10 @@ export default {
         }
       ]
     },
-    totalpreSion:{
-      type:Number,
-      default:0
-    }
+    // totalpreSion:{
+    //   type:Number,
+    //   default:0
+    // }
   },
   computed :{
     options(){

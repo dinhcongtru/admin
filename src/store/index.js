@@ -1,7 +1,8 @@
 import { createStore } from "vuex";
-
+import createPersistedState from "vuex-persistedstate";
 export default createStore({
   state: {
+    isLogin:false,
     hideConfigButton: false,
     isPinned: true,
     showConfig: false,
@@ -25,8 +26,11 @@ export default createStore({
 
   },
   mutations: {
+    changeLogin(state) {
+      return state.isLogin = true;
+    },
     handelSaveOrderCode(state,payload){
-      return state.orderCode = payload.code;
+      return state.orderCode = payload.orderID;
     },
     handelSaveCateCode(state,payload){
       return state.cateCode = payload.productCategoryCode;
@@ -72,5 +76,17 @@ export default createStore({
       commit("sidebarType", payload);
     }
   },
-  getters: {}
+  getters: {},
+  plugins: [
+    createPersistedState({
+      key: "admin", // Đặt tên key cho mảng
+      paths: [], // Chỉ lưu trữ mảng này
+      // transformState: (state) => ({
+      //   product: state.product.slice(0), // Tạo bản sao của mảng để lưu trữ
+      //   customer: state.customer.slice(0),
+      //   phiStoryProduct: state.cloneProduct.slice(0),
+      //   paramsRouterProduct: state.paramsRouterProduct.slice(0),
+      // }),
+    }),
+  ],
 });

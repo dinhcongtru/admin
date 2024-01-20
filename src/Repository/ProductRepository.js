@@ -20,5 +20,23 @@ export default {
      },
      FilterAndPaging(PageSize,PageNumber,filter){
          return Repository.get(`${resource}/filter?keyword=${filter}&PageSize=${PageSize}&PageNumber=${PageNumber}`);
+     },
+     doanhthungay(){
+      return Repository.get(`${resource}/revenueOnDate`);
+     },
+     tongnhanvien(){
+      return Repository.get(`${resource}/totalEmployee`);
+     },
+     tongdontrongngay(){
+      return Repository.get(`${resource}/totalOrder`);
+     },
+     GetProductByCateBestSell(){
+      return Repository.get(`${resource}/GetProductByCateBestSell`);
+     },
+     getAllOrders(){
+      return Repository.get(`${resource}/getAllOrders`);
+     },
+     getOrderDetailByOrderID(id){
+      return Repository.get(`${resource}/getOrderDetailByOrderID/${id}`);
      }
 }

@@ -21,6 +21,7 @@
     import AuthorsTable from "./components/AuthorsTable.vue";
     import ArgonPagination from "@/components/ArgonPagination.vue";
     import ArgonPaginationItem from "@/components/ArgonPaginationItem.vue";
+    import axios from 'axios'
     export default {
       name: "EmplyeeList",
       components: {
@@ -29,6 +30,18 @@
         ArgonPaginationItem,
         ArgonInput
     
+      },
+      created(){
+        this.getAll();
+      },
+      methods:{
+        getAll(){
+          axios.get(`http://localhost:5041/getAll`).then(res => {
+            if(res.status == 200) {
+              this.listData = res.data;
+            }
+          })
+        }
       },
       data() {
         return {
@@ -46,15 +59,7 @@
     
           ],
           listData: [
-            {  fullName: "Đinh Thế ANH", email: "anh@gmail.com", phone: "0964189895", address: "số 23, lê đức thọ",gender: "nam",designation:"nhân viên", createdDate: "04/9/2249",dateOfBirth:"04/02/2249" },
-            {  fullName: "Đinh Thế ANH", email: "anh@gmail.com", phone: "0964189895", address: "số 23, lê đức thọ",gender: "nam",designation:"nhân viên", createdDate: "04/9/2249",dateOfBirth:"04/02/2249" },
-            {  fullName: "Đinh Thế ANH", email: "anh@gmail.com", phone: "0964189895", address: "số 23, lê đức thọ",gender: "nam",designation:"nhân viên", createdDate: "04/9/2249",dateOfBirth:"04/02/2249" },
-            {  fullName: "Đinh Thế ANH", email: "anh@gmail.com", phone: "0964189895", address: "số 23, lê đức thọ",gender: "nam",designation:"nhân viên", createdDate: "04/9/2249",dateOfBirth:"04/02/2249" },
-            {  fullName: "Đinh Thế ANH", email: "anh@gmail.com", phone: "0964189895", address: "số 23, lê đức thọ",gender: "nam",designation:"nhân viên", createdDate: "04/9/2249",dateOfBirth:"04/02/2249" },
-           
-    
-    
-          ],
+            ],
           stats: {
             titleColor: "opacity-7 text-white",
             descColor: "text-white",
@@ -86,10 +91,10 @@
   
   <style scoped>
 .form-group {
-  position: absolute;
+  top: 15%;
+    position: fixed;
     width: 220px;
     right: 60px;
     z-index: 1;
-    top: 19%;
 }
 </style>  

@@ -21,6 +21,8 @@
     import AuthorsTable from "./components/AuthorsTable.vue";
     import ArgonPagination from "@/components/ArgonPagination.vue";
     import ArgonPaginationItem from "@/components/ArgonPaginationItem.vue";
+    import { RepositoryFactory } from "@/Repository/RepositoryFactory";
+    const CustomerFactory = RepositoryFactory.get("Customers");
     export default {
       name: "CustomerList",
       components: {
@@ -29,6 +31,18 @@
         ArgonPaginationItem,
         ArgonInput
     
+      },
+      methods:{
+        GetAllCustomer(){
+          CustomerFactory.GetAllCustomer().then(res => {
+            if(res.status == 200) {
+              this.listData = res.data;
+            }
+          })
+        }
+      },
+      created(){
+        this.GetAllCustomer();
       },
       data() {
         return {
@@ -41,10 +55,7 @@
     
           ],
           listData: [
-            {  fullName: "Đinh Thế ANH", email: "anh@gmail.com", phone: "0964189895", createdDate: "04/9/2249",descrips_default: 0 },
-            {  fullName: "Đinh Thế ANH", email: "anh@gmail.com", phone: "0964189895", createdDate: "04/9/2249",descrips_default: 0 },
-            {  fullName: "Đinh Thế ANH", email: "anh@gmail.com", phone: "0964189895", createdDate: "04/9/2249",descrips_default: 0 },
-            {  fullName: "Đinh Thế ANH", email: "anh@gmail.com", phone: "0964189895", createdDate: "04/9/2249",descrips_default: 0 },
+            
            
     
     
@@ -80,10 +91,10 @@
   
   <style scoped>
   .form-group {
-    position: absolute;
-      width: 220px;
-      right: 60px;
-      z-index: 1;
-      top: 19%;
+    top: 15%;
+    position: fixed;
+    width: 220px;
+    right: 60px;
+    z-index: 1;
   }
   </style>

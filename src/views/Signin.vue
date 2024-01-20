@@ -13,10 +13,10 @@
                 <div class="card-body">
                   <form role="form">
                     <div class="mb-3">
-                      <argon-input type="email" placeholder="Email" name="email" size="lg" />
+                      <argon-input type="email" v-model="user.email" placeholder="Email" size="lg" />
                     </div>
                     <div class="mb-3">
-                      <argon-input type="password" placeholder="Mật Khẩu" name="password" size="lg" />
+                      <argon-input type="password" placeholder="Mật Khẩu" v-model="user.password" size="lg" />
                     </div>
                     <argon-switch id="rememberMe">Nhớ Mật Khẩu</argon-switch>
 
@@ -27,6 +27,7 @@
                         color="success"
                         fullWidth
                         size="lg"
+                        @click.prevent="SingIn"
                       >Đăng Nhập</argon-button>
                     </div>
                   </form>
@@ -66,13 +67,32 @@ import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonSwitch from "@/components/ArgonSwitch.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 const body = document.getElementsByTagName("body")[0];
-
+import store from '@/store';
+import axios from 'axios'
 export default {
   name: "signin",
   components: {
     ArgonInput,
     ArgonSwitch,
     ArgonButton,
+  },
+  methods:{
+    SingIn(){
+      if(Object.keys(this.user).length > 0){
+        this.user.fullName = "string";
+        axios.post(`http://localhost:5041/PostLoginDetails`,this.user).then(res => {
+          if(res.status == 200 ){
+            store.commit("changeLogin");
+            window.location.href = "/"
+          }
+        })
+      }
+    }
+  },
+  data() {
+    return {
+      user: {}
+    }
   },
   created() {
     this.$store.state.hideConfigButton = true;

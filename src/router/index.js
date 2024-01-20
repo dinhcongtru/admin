@@ -118,5 +118,31 @@ const router = createRouter({
   routes,
   linkActiveClass: "active",
 });
+// Định nghĩa Navigation Guard
+// router.beforeEach((to, from, next) => {
+//   // Kiểm tra xem người dùng đã đăng nhập hay chưa
+//   // const isAuthenticated = checkIfUserIsLoggedIn(); // Hàm kiểm tra đăng nhập của bạn
+//   if(this.$store.state.isLogin == false) {
+//     next('/signin');
+//   }else{
+//     next();
+//   }
+
+  // if (to.path !== '/signin' && !this.$store.state.isLogin) {
+  //   // Nếu người dùng chưa đăng nhập và đang truy cập một trang khác trang đăng nhập,
+  //   // chuyển hướng về trang đăng nhập
+  //   next('/signin');
+  // } else {
+  //   // Người dùng đã đăng nhập hoặc đang truy cập trang đăng nhập
+  //   next();
+  // }
+// });
+// Hàm kiểm tra đăng nhập của bạn
+// function checkIfUserIsLoggedIn() {
+//   // Kiểm tra logic đăng nhập của bạn và trả về true nếu đã đăng nhập, false nếu chưa đăng nhập
+//   // Ví dụ:
+//   const isLoggedIn = localStorage.getItem('isLoggedIn');
+//   return isLoggedIn === 'true';
+// }
 
 export default router;
